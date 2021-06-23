@@ -8,6 +8,7 @@ use Laravel\Scout\Searchable;
 class Punchline extends Model
 {
     use Searchable;
+    const SEARCHABLE_FIELDS = ['id', 'description'];
     /**
      * The attributes that are not mass assignable.
      *
@@ -67,14 +68,43 @@ class Punchline extends Model
 
     public function searchableAs()
     {
-        return 'punchlines';
+        return 'punchlines_index';
     }
 
     // Define which fields to search
     public function toSearchableArray()
     {
-        return [
-            'user_description' => $this->description,  //user_name Prefix to distinguish. Because different tables may have the same fields. mysql The fields in are name,email,created_at. stay es We store user_name，user_email,user_created_at. It can be customized.
-        ];
+        return $this->only(self::SEARCHABLE_FIELDS);
     }
+
+    public function getIsValidated(): int
+    {
+        return $this->is_validated;
+    }
+
+
+    /**
+     * @param int $isValidated
+     */
+    public function setIsValidated(int $isValidated)
+    {
+        $this->is_validated = $isValidated;
+    }
+
+    /**
+     * @param int $artistId
+     */
+    public function setArtistId(int $artistId)
+    {
+        $this->artist_id = $artistId;
+    }
+
+    /**
+     * @param int $titleId
+     */
+    public function setTitleId(int $titleId)
+    {
+        $this->title_id = $titleId;
+    }
+
 }

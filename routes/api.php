@@ -23,4 +23,5 @@ Route::group(['middleware' => ['guest:api']], function (){
     Route::get('punchlines/{page_size}/{page_number}', [PunchlineController::class, 'getPunchlinesByPopularity']);
     Route::get('artists/punchlines/{page_size}/{page_number}', [PunchlineController::class, 'getArtistsWhoHavePunchlines']);
     Route::get('/', [PunchlineController::class, 'search']);
+    Route::post('/punchline/create', [PunchlineController::class, 'create']);
 });

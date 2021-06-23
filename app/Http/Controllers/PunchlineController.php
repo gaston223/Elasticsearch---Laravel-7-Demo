@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Artist;
 use App\Models\Punchline;
-use App\Models\Title;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -87,5 +86,17 @@ class PunchlineController extends Controller
             'punchlines' => $resultsPunchlines,
             'artists' => $resultsArtists
         ]);
+    }
+
+    public function create(Request $request)
+    {
+        $punchline = new Punchline();
+
+        $punchline->description = $request->description;
+        $punchline->setIsValidated(1);
+        $punchline->setArtistId(1);
+        $punchline->setTitleId(1);
+
+        $punchline->save();
     }
 }
