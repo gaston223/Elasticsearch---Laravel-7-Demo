@@ -70,23 +70,17 @@ class PunchlineController extends Controller
     {
         $term = $request->query('term');
 
-        //With laravel-cross-eloquent-search library
-        /*$results = Search::new()
-            ->add(Punchline::class, 'description','created_at')
-            ->add(Title::class, 'name', 'created_at')
-            ->add(Artist::class, 'name', 'created_at')
-            ->beginWithWildcard()
-            ->orderByDesc()
-            ->paginate(10)
-            ->get($term);*/
+//        $resultsPunchlines = Punchline::select('id', 'description')
+//            ->where('description', 'like', "%{$term}%")->withCount('punchline_profile')
+//            ->orderBy('punchline_profile_count', 'desc')
+//            ->get();
 
-        $resultsPunchlines = Punchline::select('id', 'description')
-            ->where('description', 'like', "%{$term}%")->withCount('punchline_profile')
-            ->orderBy('punchline_profile_count', 'desc')
-            ->get();
+//        $resultsArtists = Artist::select('id', 'name')
+//            ->where('name', 'like', "%{$term}%")->get();
 
-        $resultsArtists = Artist::select('id', 'name')
-            ->where('name', 'like', "{$term}")->get();
+        $resultsArtists = Artist::search($term)->get();
+        $resultsPunchlines = Punchline::search($term)->get();
+
         //dd($results->items());
         return response()->json([
             'code' => 200,
