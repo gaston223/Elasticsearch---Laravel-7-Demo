@@ -88,6 +88,9 @@ class PunchlineController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     */
     public function create(Request $request)
     {
         $punchline = new Punchline();
@@ -98,5 +101,15 @@ class PunchlineController extends Controller
         $punchline->setTitleId(1);
 
         $punchline->save();
+    }
+
+
+    /**
+     * @param $punchlineId
+     */
+    public function delete($punchlineId)
+    {
+        $punchline = Punchline::find($punchlineId);
+        $punchline->delete();
     }
 }
